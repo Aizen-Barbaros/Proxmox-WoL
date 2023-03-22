@@ -23,3 +23,7 @@ else
   sed -i "/iface $device_name inet/ a\        post-up /usr/sbin/ethtool -s $device_name wol g" /etc/network/interfaces
   echo "Wake-on-LAN has been configured for $device_name in /etc/network/interfaces"
 fi
+
+mac_addr=$(ip addr show $device_name | awk '/ether/ {print $2}')
+
+pvenode config set -wakeonlan $mac_addr
