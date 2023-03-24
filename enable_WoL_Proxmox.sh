@@ -24,6 +24,8 @@ else
   echo "Wake-on-LAN has been configured for $device_name in /etc/network/interfaces"
 fi
 
+# Get the MAC address of the selected network devices
 mac_addr=$(ip addr show $device_name | awk '/ether/ {print $2}')
 
+# Set the MAC address to the node for WOL
 pvenode config set -wakeonlan $mac_addr
